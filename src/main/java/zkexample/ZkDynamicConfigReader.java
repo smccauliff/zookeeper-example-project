@@ -87,9 +87,13 @@ public class ZkDynamicConfigReader {
             case SyncConnected:
               initiateRecursiveCreatePath(rootPath + "/config");
               LOG.info("Sent async create.");
+              break;
             case Disconnected:
+              LOG.warn("Disconnected from zookeeper.");
+              break;
             case Expired:
               LOG.warn("Zookeeper config connection state change {}.", watchedEvent);
+              //TODO: when the session has expired a new ZK client needs to be created.
               break;
             default:
               break;
